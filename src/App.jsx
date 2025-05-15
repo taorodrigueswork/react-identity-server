@@ -4,8 +4,10 @@ import axios from "axios";
 const client_id = "pkce-client";
 const scope = "openid profile pkce-scope offline_access";
 const response_type = "code";
+
 const redirect_uri = "https://localhost:5001/signin-oidc"; // Must be a valid URL in the REACT application host and port, and be in the Identity Server database as calback.
 const baseUrl = "https://zkg3j6f6-48814.usw3.devtunnels.ms"; // Change this to the Identity Server URL
+
 let codeVerifierGlobal = ""; // Save to use in token exchange
 
 function App() {
