@@ -4,8 +4,10 @@ import axios from "axios";
 const client_id = "pkce-client";
 const scope = "openid profile pkce-scope offline_access";
 const response_type = "code";
-const redirect_uri = "https://localhost:5001/signin-oidc"; // Must be a valid URL in the REACT application
-const baseUrl = "https://zkg3j6f6-48814.usw3.devtunnels.ms"; // Change this
+
+const redirect_uri = "https://localhost:5001/signin-oidc"; // Must be a valid URL in the REACT application host and port, and be in the Identity Server database as calback.
+const baseUrl = "https://zkg3j6f6-48814.usw3.devtunnels.ms"; // Change this to the Identity Server URL
+
 let codeVerifierGlobal = ""; // Save to use in token exchange
 
 function App() {
@@ -46,7 +48,7 @@ function App() {
     localStorage.setItem("pkce_code_verifier", codeVerifier); // Save it
 
     const codeChallenge = await generateCodeChallenge(codeVerifier);
-  
+
     const params = new URLSearchParams({
       client_id,
       response_type,
@@ -81,7 +83,7 @@ function App() {
       const response = await axios.post(`${baseUrl}/connect/token`, params);
 
       console.log("Token Response:", response.data);
-      
+
       setRefreshToken(response.data.refresh_token);
     } catch (error) {
       console.error("Token exchange failed", error);
